@@ -1,3 +1,2 @@
-# JUnit reports
-**/report.xml
-venv/**
+# macOS
+.DS_Store

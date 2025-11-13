@@ -1,6 +1,6 @@
-# Contributing to tokyo-night-tmux
+# Contributing to tmux-status-line
 
-Thank you for your interest in contributing to the tokyo-night-tmux project! We welcome contributions from the community to help improve and enhance the project. To ensure a smooth collaboration process, please follow the guidelines outlined below.
+Thank you for your interest in contributing to the tmux-status-line project! We welcome contributions from the community to help improve and enhance the project. To ensure a smooth collaboration process, please follow the guidelines outlined below.
 
 ## Before Making a Pull Request
 
@@ -10,23 +10,25 @@ Thank you for your interest in contributing to the tokyo-night-tmux project! We 
 
 ## Making a Pull Request
 
-1. **Fork the Repository**: Fork the tokyo-night-tmux repository to your own GitHub account.
+1. **Fork the Repository**: Fork the tmux-status-line repository to your own GitHub account.
 
 2. **Create a Branch**: Create a new branch from the `next` branch in your forked repository. Use a descriptive name for your branch that reflects the purpose of your changes.
 
 3. **Make Changes**: Implement your changes or additions to the codebase in your branch. Ensure that your code follows the project's coding style and conventions.
 
 4. **Pre-Commit Checks**: Before committing your changes, run the pre-commit checks to ensure your code passes all the necessary tests and checks. Run the following command:
-   ```
-   pre-commit run --all-files
-   ```
-   Make sure all pre-commit checks pass successfully.
+
+    ```
+    pre-commit run --all-files
+    ```
+
+    Make sure all pre-commit checks pass successfully.
 
 5. **Commit Changes**: Commit your changes with a clear and descriptive commit message. Follow the Conventional Commits specification for commit message formatting. Refer to the [Conventional Commits summary](https://www.conventionalcommits.org/en/v1.0.0/#summary) for more details.
 
 6. **Push Changes**: Push your branch to your forked repository on GitHub.
 
-7. **Open a Pull Request**: Open a pull request from your branch to the `next` branch of the main tokyo-night-tmux repository. Provide a clear title and description for your pull request, explaining the changes you have made and referencing any related issues.
+7. **Open a Pull Request**: Open a pull request from your branch to the `next` branch of the main tmux-status-line repository. Provide a clear title and description for your pull request, explaining the changes you have made and referencing any related issues.
 
 8. **Resolve Conflicts**: If your pull request has conflicts with the `next` branch, please resolve them by rebasing your branch on top of the latest `next` branch and resolving any merge conflicts that arise.
 
@@ -41,4 +43,4 @@ Thank you for your interest in contributing to the tokyo-night-tmux project! We 
 - Make sure your pull request passes all the pre-commit checks by running `pre-commit run --all-files` before submitting.
 - Follow the Conventional Commits specification for commit message formatting to maintain a consistent and informative commit history.
 
-Thank you for your contribution to tokyo-night-tmux! We appreciate your effort and look forward to collaborating with you.
+Thank you for your contribution to tmux-status-line! We appreciate your effort and look forward to collaborating with you.
