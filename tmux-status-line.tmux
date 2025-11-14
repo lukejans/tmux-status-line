@@ -61,7 +61,8 @@ hostname="#(${SCRIPTS_PATH}/hostname-widget.sh)"
 
 # Status Line
 # ===========
-tmux set -g status-left "#[fg=${THEME[background]},bg=${THEME[cyan]},bold] #{?client_prefix,󰠠 ,#[dim]󰤂 }#[bold,nodim]#S${hostname} "
+tmux set -g status-left "#[fg=${THEME[foreground]},bold,reverse]#{?client_prefix,󰠠 ,#[dim]󰤂 }#[bold,nodim]#S${hostname} "
+#[bold]
 # window focused
 tmux set -g window-status-current-format "${RESET}#[fg=${THEME[brightcyan]},bg=${THEME[black]}] #{?#{==:#{pane_current_command},ssh},${default_ssh_icon} ,${active_terminal_icon} ${window_space}}#[fg=${THEME[foreground]},bold,nodim]${window_number}#W#[nobold]#{?window_zoomed_flag, ${zoom_number}, ${custom_pane}}#{?window_last_flag, , }"
 # window unfocused

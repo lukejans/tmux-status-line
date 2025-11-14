@@ -38,19 +38,19 @@ fi
 UNTRACKED_COUNT="$(git ls-files --other --directory --exclude-standard | wc -l | bc)"
 
 if [[ ${CHANGED_COUNT} -gt 0 ]]; then
-    STATUS_CHANGED="${RESET}#[fg=${THEME[yellow]},bg=${THEME[background]},bold] ${CHANGED_COUNT} "
+    STATUS_CHANGED="${RESET}#[fg=${THEME[git_changes]},bg=${THEME[background]},bold] ${CHANGED_COUNT} "
 fi
 
 if [[ ${INSERTIONS_COUNT} -gt 0 ]]; then
-    STATUS_INSERTIONS="${RESET}#[fg=${THEME[green]},bg=${THEME[background]},bold] ${INSERTIONS_COUNT} "
+    STATUS_INSERTIONS="${RESET}#[fg=${THEME[git_additions]},bg=${THEME[background]},bold] ${INSERTIONS_COUNT} "
 fi
 
 if [[ ${DELETIONS_COUNT} -gt 0 ]]; then
-    STATUS_DELETIONS="${RESET}#[fg=${THEME[red]},bg=${THEME[background]},bold] ${DELETIONS_COUNT} "
+    STATUS_DELETIONS="${RESET}#[fg=${THEME[git_deletions]},bg=${THEME[background]},bold] ${DELETIONS_COUNT} "
 fi
 
 if [[ ${UNTRACKED_COUNT} -gt 0 ]]; then
-    STATUS_UNTRACKED="${RESET}#[fg=${THEME[black]},bg=${THEME[background]},bold] ${UNTRACKED_COUNT} "
+    STATUS_UNTRACKED="${RESET}#[fg=${THEME[git_untracked]},bg=${THEME[background]},bold] ${UNTRACKED_COUNT} "
 fi
 
 # Determine repository sync status
