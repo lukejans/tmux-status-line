@@ -42,11 +42,11 @@ if [[ ${CHANGED_COUNT} -gt 0 ]]; then
 fi
 
 if [[ ${INSERTIONS_COUNT} -gt 0 ]]; then
-    STATUS_INSERTIONS="${RESET}#[fg=${THEME[green]},bg=${THEME[background]},bold] ${INSERTIONS_COUNT} "
+    STATUS_INSERTIONS="${RESET}#[fg=${THEME[green]},bg=${THEME[background]},bold] ${INSERTIONS_COUNT} "
 fi
 
 if [[ ${DELETIONS_COUNT} -gt 0 ]]; then
-    STATUS_DELETIONS="${RESET}#[fg=${THEME[red]},bg=${THEME[background]},bold] ${DELETIONS_COUNT} "
+    STATUS_DELETIONS="${RESET}#[fg=${THEME[red]},bg=${THEME[background]},bold] ${DELETIONS_COUNT} "
 fi
 
 if [[ ${UNTRACKED_COUNT} -gt 0 ]]; then
@@ -78,16 +78,16 @@ fi
 # Set the status indicator based on the sync mode
 case "${SYNC_MODE}" in
 1)
-    REMOTE_STATUS="${RESET}#[bg=${THEME[background]},fg=${THEME[brightred]},bold]▒ "
+    REMOTE_STATUS="${RESET}#[bg=${THEME[background]},fg=${THEME[brightred]},bold] "
     ;;
 2)
-    REMOTE_STATUS="${RESET}#[bg=${THEME[background]},fg=${THEME[red]},bold]▒ 󰛃"
+    REMOTE_STATUS="${RESET}#[bg=${THEME[background]},fg=${THEME[red]},bold] 󰛃"
     ;;
 3)
-    REMOTE_STATUS="${RESET}#[bg=${THEME[background]},fg=${THEME[magenta]},bold]▒ 󰛀"
+    REMOTE_STATUS="${RESET}#[bg=${THEME[background]},fg=${THEME[magenta]},bold] 󰛀"
     ;;
 *)
-    REMOTE_STATUS="${RESET}#[bg=${THEME[background]},fg=${THEME[green]},bold]▒ "
+    REMOTE_STATUS="${RESET}#[bg=${THEME[background]},fg=${THEME[green]},bold] "
     ;;
 esac
 
