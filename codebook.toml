@@ -1,0 +1,17 @@
+words = [
+    "brightblack",
+    "brightblue",
+    "brightcyan",
+    "brightgreen",
+    "brightmagenta",
+    "brightred",
+    "brightwhite",
+    "brightyellow",
+    "dsquare",
+    "hsquare",
+    "netspeed",
+    "nobold",
+    "nodim",
+    "noitalics",
+    "nounderscore",
+]

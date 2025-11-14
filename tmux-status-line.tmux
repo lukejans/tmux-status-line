@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
-# shellcheck source=src/themes.sh
-source "${SCRIPTS_PATH}/themes.sh"
-
 # Env Setup
 # =========
 TMUX_VARS="$(tmux show -g)"
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SCRIPTS_PATH="${CURRENT_DIR}/src"
+# shellcheck source=src/themes.sh
+source "${SCRIPTS_PATH}/themes.sh"
 RESET="#[fg=${THEME[foreground]},bg=${THEME[background]},nobold,noitalics,nounderscore,nodim]"
 
 # Default Config
