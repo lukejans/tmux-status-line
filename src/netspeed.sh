@@ -23,13 +23,13 @@ TIME_DIFF=${TIME_DIFF:-1}
 
 # Icons
 declare -A NET_ICONS
-NET_ICONS[wifi_up]="#[fg=${THEME[foreground]}]\U000f05a9"  # nf-md-wifi
-NET_ICONS[wifi_down]="#[fg=${THEME[red]}]\U000f05aa"       # nf-md-wifi_off
-NET_ICONS[wired_up]="#[fg=${THEME[foreground]}]\U000f0318" # nf-md-lan_connect
-NET_ICONS[wired_down]="#[fg=${THEME[red]}]\U000f0319"      # nf-md-lan_disconnect
-NET_ICONS[traffic_tx]="#[fg=${THEME[bblue]}]\U000f06f6"    # nf-md-upload_network
-NET_ICONS[traffic_rx]="#[fg=${THEME[bgreen]}]\U000f06f4"   # nf-md-download_network
-NET_ICONS[ip]="#[fg=${THEME[foreground]}]\U000f0a5f"       # nf-md-ip
+NET_ICONS[wifi_up]="#[fg=${THEME[foreground]}]\U000f05a9"     # nf-md-wifi
+NET_ICONS[wifi_down]="#[fg=${THEME[red]}]\U000f05aa"          # nf-md-wifi_off
+NET_ICONS[wired_up]="#[fg=${THEME[foreground]}]\U000f0318"    # nf-md-lan_connect
+NET_ICONS[wired_down]="#[fg=${THEME[red]}]\U000f0319"         # nf-md-lan_disconnect
+NET_ICONS[traffic_tx]="#[fg=${THEME[brightblue]}]\U000f06f6"  # nf-md-upload_network
+NET_ICONS[traffic_rx]="#[fg=${THEME[brightgreen]}]\U000f06f4" # nf-md-download_network
+NET_ICONS[ip]="#[fg=${THEME[foreground]}]\U000f0a5f"          # nf-md-ip
 
 # Determine interface if not set
 if [[ -z $INTERFACE ]]; then

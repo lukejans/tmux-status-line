@@ -1,36 +1,36 @@
 #!/usr/bin/env bash
 
-CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SCRIPTS_PATH="${CURRENT_DIR}/src"
-
 # shellcheck source=src/themes.sh
 source "${SCRIPTS_PATH}/themes.sh"
 
-tmux set -g status-left-length 80
-tmux set -g status-right-length 150
-
+# Env Setup
+# =========
+TMUX_VARS="$(tmux show -g)"
+CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPTS_PATH="${CURRENT_DIR}/src"
 RESET="#[fg=${THEME[foreground]},bg=${THEME[background]},nobold,noitalics,nounderscore,nodim]"
 
-# highlight colors
-tmux set -g mode-style "fg=${THEME[bgreen]},bg=${THEME[bblack]}"
+# Default Config
+# ==============
+declare -r default_window_id_style="hsquare"
+declare -r default_pane_id_style="hsquare"
+declare -r default_zoom_id_style="dsquare"
+declare -r default_term_icon=""
+declare -r default_active_term_icon=""
+declare -r default_ssh_icon=""
+declare -r default_last_win_icon="󰁯"
 
+# Status Line Setup
+# =================
+tmux set -g status-left-length 80
+tmux set -g status-right-length 150
+tmux set -g mode-style "fg=${THEME[brightgreen]},bg=${THEME[brightblack]}"
+tmux set -g status-style bg="${THEME[background]}"
 tmux set -g message-style "bg=${THEME[blue]},fg=${THEME[background]}"
 tmux set -g message-command-style "fg=${THEME[white]},bg=${THEME[black]}"
-
-tmux set -g pane-border-style "fg=${THEME[bblack]}"
 tmux set -g pane-active-border-style "fg=${THEME[blue]}"
+tmux set -g pane-border-style "fg=${THEME[brightblack]}"
 tmux set -g pane-border-status off
-
-tmux set -g status-style bg="${THEME[background]}"
-
-TMUX_VARS="$(tmux show -g)"
-
-default_window_id_style="hsquare"
-default_pane_id_style="hsquare"
-default_zoom_id_style="dsquare"
-
-default_terminal_icon=""
-default_active_terminal_icon=""
 
 window_id_style="$(echo "${TMUX_VARS}" | grep '@tmux-status-line_window_id_style' | cut -d" " -f2)"
 pane_id_style="$(echo "${TMUX_VARS}" | grep '@tmux-status-line_pane_id_style' | cut -d" " -f2)"
@@ -42,12 +42,13 @@ window_tidy="$(echo "${TMUX_VARS}" | grep '@tmux-status-line_window_tidy_icons' 
 window_id_style="${window_id_style:-${default_window_id_style}}"
 pane_id_style="${pane_id_style:-${default_pane_id_style}}"
 zoom_id_style="${zoom_id_style:-${default_zoom_id_style}}"
-terminal_icon="${terminal_icon:-${default_terminal_icon}}"
-active_terminal_icon="${active_terminal_icon:-${default_active_terminal_icon}}"
+terminal_icon="${terminal_icon:-${default_term_icon}}"
+active_terminal_icon="${active_terminal_icon:-${default_active_term_icon}}"
 window_space="${window_tidy:-0}"
-
 window_space=$([[ ${window_tidy} == "0" ]] && echo " " || echo "")
 
+# Status Line Info
+# ================
 netspeed="#(${SCRIPTS_PATH}/netspeed.sh)"
 git_status="#(${SCRIPTS_PATH}/git-status.sh #{pane_current_path})"
 wb_git_status="#(${SCRIPTS_PATH}/wb-git-status.sh #{pane_current_path})"
@@ -61,13 +62,13 @@ hostname="#(${SCRIPTS_PATH}/hostname-widget.sh)"
 
 # left status line
 # session name
-tmux set -g status-left "#[fg=${THEME[bblack]},bg=${THEME[blue]},bold] #{?client_prefix,󰠠 ,#[dim]󰤂 }#[bold,nodim]#S${hostname} "
+tmux set -g status-left "#[fg=${THEME[brightblack]},bg=${THEME[blue]},bold] #{?client_prefix,󰠠 ,#[dim]󰤂 }#[bold,nodim]#S${hostname} "
 
 # windows
 # focus
-tmux set -g window-status-current-format "${RESET}#[fg=${THEME[green]},bg=${THEME[bblack]}] #{?#{==:#{pane_current_command},ssh}, ,${active_terminal_icon} ${window_space}}#[fg=${THEME[foreground]},bold,nodim]${window_number}#W#[nobold]#{?window_zoomed_flag, ${zoom_number}, ${custom_pane}}#{?window_last_flag, , }"
+tmux set -g window-status-current-format "${RESET}#[fg=${THEME[green]},bg=${THEME[brightblack]}] #{?#{==:#{pane_current_command},ssh},${default_ssh_icon} ,${active_terminal_icon} ${window_space}}#[fg=${THEME[foreground]},bold,nodim]${window_number}#W#[nobold]#{?window_zoomed_flag, ${zoom_number}, ${custom_pane}}#{?window_last_flag, , }"
 # unfocused
-tmux set -g window-status-format "${RESET}#[fg=${THEME[foreground]}] #{?#{==:#{pane_current_command},ssh}, ,${terminal_icon} ${window_space}}${RESET}${window_number}#W#[nobold,dim]#{?window_zoomed_flag, ${zoom_number}, ${custom_pane}}#[fg=${THEME[yellow]}]#{?window_last_flag,󰁯  , }"
+tmux set -g window-status-format "${RESET}#[fg=${THEME[foreground]}] #{?#{==:#{pane_current_command},ssh},${default_ssh_icon} ,${terminal_icon} ${window_space}}${RESET}${window_number}#W#[nobold,dim]#{?window_zoomed_flag, ${zoom_number}, ${custom_pane}}#[fg=${THEME[yellow]}]#{?window_last_flag,${default_last_win_icon}  , }"
 
 # right status line
 tmux set -g status-right "${battery_status}${current_path}${netspeed}${git_status}${wb_git_status}${date_and_time}"

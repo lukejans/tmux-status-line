@@ -78,7 +78,7 @@ fi
 # Set the status indicator based on the sync mode
 case "${SYNC_MODE}" in
 1)
-    REMOTE_STATUS="${RESET}#[bg=${THEME[background]},fg=${THEME[bred]},bold]▒ 󱓎"
+    REMOTE_STATUS="${RESET}#[bg=${THEME[background]},fg=${THEME[brightred]},bold]▒ "
     ;;
 2)
     REMOTE_STATUS="${RESET}#[bg=${THEME[background]},fg=${THEME[red]},bold]▒ 󰛃"
