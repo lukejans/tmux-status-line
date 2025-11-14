@@ -50,7 +50,7 @@ window_space=$([[ ${window_tidy} == "0" ]] && echo " " || echo "")
 
 netspeed="#(${SCRIPTS_PATH}/netspeed.sh)"
 git_status="#(${SCRIPTS_PATH}/git-status.sh #{pane_current_path})"
-wb_git_status="#(${SCRIPTS_PATH}/wb-git-status.sh #{pane_current_path} &)"
+wb_git_status="#(${SCRIPTS_PATH}/wb-git-status.sh #{pane_current_path})"
 window_number="#(${SCRIPTS_PATH}/custom-number.sh #I ${window_id_style})"
 custom_pane="#(${SCRIPTS_PATH}/custom-number.sh #P ${pane_id_style})"
 zoom_number="#(${SCRIPTS_PATH}/custom-number.sh #P ${zoom_id_style})"
