@@ -10,7 +10,7 @@ source "${SCRIPTS_PATH}/themes.sh"
 RESET="#[fg=${THEME[foreground]},bg=${THEME[background]},nobold,noitalics,nounderscore,nodim]"
 
 # Default Config
-# ==============
+# =============
 declare -r default_window_id_style="hsquare"
 declare -r default_pane_id_style="hsquare"
 declare -r default_zoom_id_style="dsquare"
@@ -59,16 +59,13 @@ current_path="#(${SCRIPTS_PATH}/path-widget.sh #{pane_current_path})"
 battery_status="#(${SCRIPTS_PATH}/battery-widget.sh)"
 hostname="#(${SCRIPTS_PATH}/hostname-widget.sh)"
 
-# left status line
-# session name
-tmux set -g status-left "#[fg=${THEME[brightblack]},bg=${THEME[blue]},bold] #{?client_prefix,󰠠 ,#[dim]󰤂 }#[bold,nodim]#S${hostname} "
-
-# windows
-# focus
-tmux set -g window-status-current-format "${RESET}#[fg=${THEME[green]},bg=${THEME[brightblack]}] #{?#{==:#{pane_current_command},ssh},${default_ssh_icon} ,${active_terminal_icon} ${window_space}}#[fg=${THEME[foreground]},bold,nodim]${window_number}#W#[nobold]#{?window_zoomed_flag, ${zoom_number}, ${custom_pane}}#{?window_last_flag, , }"
-# unfocused
-tmux set -g window-status-format "${RESET}#[fg=${THEME[foreground]}] #{?#{==:#{pane_current_command},ssh},${default_ssh_icon} ,${terminal_icon} ${window_space}}${RESET}${window_number}#W#[nobold,dim]#{?window_zoomed_flag, ${zoom_number}, ${custom_pane}}#[fg=${THEME[yellow]}]#{?window_last_flag,${default_last_win_icon}  , }"
-
+# Status Line
+# ===========
+tmux set -g status-left "#[fg=${THEME[background]},bg=${THEME[cyan]},bold] #{?client_prefix,󰠠 ,#[dim]󰤂 }#[bold,nodim]#S${hostname} "
+# window focused
+tmux set -g window-status-current-format "${RESET}#[fg=${THEME[brightcyan]},bg=${THEME[black]}] #{?#{==:#{pane_current_command},ssh},${default_ssh_icon} ,${active_terminal_icon} ${window_space}}#[fg=${THEME[foreground]},bold,nodim]${window_number}#W#[nobold]#{?window_zoomed_flag, ${zoom_number}, ${custom_pane}}#{?window_last_flag, , }"
+# window unfocused
+tmux set -g window-status-format "${RESET}#[fg=${THEME[foreground]}] #{?#{==:#{pane_current_command},ssh},${default_ssh_icon} ,${terminal_icon} ${window_space}}${RESET}${window_number}#W#[nobold,dim]#{?window_zoomed_flag, ${zoom_number}, ${custom_pane}}#[fg=${THEME[brightyellow]}]#{?window_last_flag,${default_last_win_icon}  , }"
 # right status line
 tmux set -g status-right "${battery_status}${current_path}${netspeed}${git_status}${wb_git_status}${date_and_time}"
 tmux set -g window-status-separator ""
