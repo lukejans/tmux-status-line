@@ -59,16 +59,16 @@ tmux_opt_setup "zoom_id_style" "dsquare"
 
 # Widget Calls
 # ------------
-git_status="#(${script_path}/git-status.sh #{pane_current_path})"
-wb_git_status="#(${script_path}/wb-git-status.sh #{pane_current_path})"
+hostname="#(${script_path}/hostname-widget.sh)"
+git_status="#(${script_path}/git-widget.sh #{pane_current_path})"
+wb_git_status="#(${script_path}/wb-git-widget.sh #{pane_current_path})"
 window_number="#(${script_path}/custom-number.sh #{window_index} #{@tmux-status-line_window_id_style})"
 custom_pane="#(${script_path}/custom-number.sh #{pane_index} #{@tmux-status-line_pane_id_style})"
 zoom_number="#(${script_path}/custom-number.sh #{pane_index} #{@tmux-status-line_zoom_id_style})"
-date_and_time="#(${script_path}/datetime-widget.sh)"
-current_path="#(${script_path}/path-widget.sh #{pane_current_path})"
-netspeed="#(${script_path}/netspeed.sh)"
-hostname="#(${script_path}/hostname-widget.sh)"
-battery_status="#(${script_path}/battery-widget.sh)"
+# date_and_time="#(${script_path}/datetime-widget.sh)"
+# current_path="#(${script_path}/path-widget.sh #{pane_current_path})"
+# netspeed="#(${script_path}/netspeed.sh)"
+# battery_status="#(${script_path}/battery-widget.sh)"
 
 # Status Line
 # -----------
@@ -79,5 +79,6 @@ tmux set -g window-status-current-format "#{@tmux-status-line_reset_style}#[fg=#
 # window unfocused
 tmux set -g window-status-format "#{@tmux-status-line_reset_style}#[fg=#{@tmux-status-line_color_fg}] #{?#{==:#{pane_current_command},ssh},${ssh_icon} ,${term_icon} }#{@tmux-status-line_reset_style}${window_number}#W#[nobold,dim]#{?window_zoomed_flag, ${zoom_number}, ${custom_pane}}#[fg=#{@tmux-status-line_color_brightyellow}]#{?window_last_flag,${last_win_icon}  , }"
 # right status line
-tmux set -g status-right "${battery_status}${current_path}${netspeed}${git_status}${wb_git_status}${date_and_time}"
+tmux set -g status-right "${git_status}${wb_git_status}"
+# tmux set -g status-right "${battery_status}${current_path}${netspeed}${git_status}${wb_git_status}${date_and_time}"
 tmux set -g window-status-separator ""
