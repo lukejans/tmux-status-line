@@ -1,40 +1,29 @@
 #!/usr/bin/env bash
 
-# Imports
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.."
-. "${ROOT_DIR}/lib/coreutils-compat.sh"
+index="$1"
+format_opt="${2:-none}"
 
-format_hide=""
-format_none="0123456789"
-format_digital="🯰🯱🯲🯳🯴🯵🯶🯷🯸🯹"
-format_fsquare="󰎡󰎤󰎧󰎪󰎭󰎱󰎳󰎶󰎹󰎼"
-format_hsquare="󰎣󰎦󰎩󰎬󰎮󰎰󰎵󰎸󰎻󰎾"
-format_dsquare="󰎢󰎥󰎨󰎫󰎲󰎯󰎴󰎷󰎺󰎽"
-format_roman=" 󱂈󱂉󱂊󱂋󱂌󱂍󱂎󱂏󱂐"
-format_super="⁰¹²³⁴⁵⁶⁷⁸⁹"
-format_sub="₀₁₂₃₄₅₆₇₈₉"
-
-ID=$1
-FORMAT=${2:-none}
-
-# Preserve leading whitespace for bash
-format="$(eval echo \"\$format_${FORMAT}\")"
-
-if [ "$FORMAT" = "hide" ]; then
-  exit 0
+if [ "$format_opt" = "hide" ]; then
+    exit 0
 fi
 
-if [ -z "$format" ]; then
-  echo "Invalid format: $FORMAT"
-  exit 1
-fi
+declare -A format_opts=(
+    [digital]="🯰🯱🯲🯳🯴🯵🯶🯷🯸🯹"
+    [fsquare]="󰎡󰎤󰎧󰎪󰎭󰎱󰎳󰎶󰎹󰎼"
+    [hsquare]="󰎣󰎦󰎩󰎬󰎮󰎰󰎵󰎸󰎻󰎾"
+    [dsquare]="󰎢󰎥󰎨󰎫󰎲󰎯󰎴󰎷󰎺󰎽"
+)
 
-# If format is roman numerals (-r), only handle IDs of 1 digit
-if [ "$FORMAT" = "roman" ] && [ ${#ID} -gt 1 ]; then
-  echo -n "$ID "
+if [ "$format_opt" = "none" ]; then
+    printf "%s " "$index"
+elif [ -z "${format_opts[${format_opt}]}" ]; then
+    tmux display-message "Invalid format option $format_opt"
+    exit 1
 else
-  for ((i = 0; i < ${#ID}; i++)); do
-    DIGIT=${ID:i:1}
-    echo -n "${format:DIGIT:1} "
-  done
+    for ((i = 0; i < ${#index}; i++)); do
+        digit=${index:i:1}
+        printf "%s" "${format_opts[${format_opt}]:digit:1} "
+    done
 fi
+
+exit 0
