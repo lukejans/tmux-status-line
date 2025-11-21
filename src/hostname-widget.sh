@@ -1,17 +1,16 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-# Imports
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.."
-. "${ROOT_DIR}/lib/coreutils-compat.sh"
+show_hostname=$(tmux show-option -gv @tmux-status-line_show_hostname)
+if [ "${show_hostname}" -ne 1 ]; then
+    exit 0
+fi
 
-# Check if enabled
-ENABLED=$(tmux show-option -gv @tokyo-night-tmux_show_hostname 2>/dev/null)
-[[ ${ENABLED} -ne 1 ]] && exit 0
+if [ "$(uname)" = "Darwin" ]; then
+    hostname=$(scutil --get HostName)
+elif [ "$(uname)" = "Linux" ]; then
+    hostname=$(hostnamectl hostname)
+elif command -v hostname >/dev/null 2>&1; then
+    hostname=$(hostname)
+fi
 
-CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source $CURRENT_DIR/themes.sh
-
-hostname=$(hostnamectl hostname)
-ACCENT_COLOR="${THEME[black]}"
-
-echo "#[nodim,fg=$ACCENT_COLOR]@${hostname}"
+echo "#[nodim,fg=#{@tmux-status-line_color_black}]@${hostname}"
