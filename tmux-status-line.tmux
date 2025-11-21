@@ -1,80 +1,83 @@
 #!/usr/bin/env bash
-# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# title      Tokyo Night                                              +
-# version    1.0.0                                                    +
-# repository https://github.com/logico-dev/tmux-status-line           +
-# author     Lógico                                                   +
-# email      hi@logico.com.ar                                         +
-# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SCRIPTS_PATH="$CURRENT_DIR/src"
+current_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+script_path="${current_dir}/src"
 
-source $SCRIPTS_PATH/themes.sh
+option_prefix="@tmux-status-line_"
 
+tmux_opt_setup() {
+    local option_name="${option_prefix}${1}"
+    local option_default="${2}"
+    tmux set-option -go "${option_name}" "${option_default}"
+}
+
+# Theme
+# -----
+term_icon=""
+term_icon_active=""
+ssh_icon=""
+last_win_icon="󰁯"
+prefix_active="󰠠"
+prefix_idle="󰤂"
+# base colors
+tmux_opt_setup "color_fg" "default"
+tmux_opt_setup "color_bg" "default"
+# regular colors
+tmux_opt_setup "color_black" "black"
+tmux_opt_setup "color_red" "red"
+tmux_opt_setup "color_green" "green"
+tmux_opt_setup "color_yellow" "yellow"
+tmux_opt_setup "color_blue" "blue"
+tmux_opt_setup "color_magenta" "magenta"
+tmux_opt_setup "color_cyan" "cyan"
+tmux_opt_setup "color_white" "white"
+# bright colors
+tmux_opt_setup "color_brightblack" "brightblack"
+tmux_opt_setup "color_brightred" "brightred"
+tmux_opt_setup "color_brightgreen" "brightgreen"
+tmux_opt_setup "color_brightyellow" "brightyellow"
+tmux_opt_setup "color_brightblue" "brightblue"
+tmux_opt_setup "color_brightmagenta" "brightmagenta"
+tmux_opt_setup "color_brightcyan" "brightcyan"
+tmux_opt_setup "color_brightwhite" "brightwhite"
+# reset style
+tmux_opt_setup "reset_style" "#[fg=#{@tmux-status-line_color_fg},bg=#{@tmux-status-line_color_bg},nobold,noitalics,nounderscore,nodim]"
+
+# Tmux Options
+# ------------
 tmux set -g status-left-length 80
 tmux set -g status-right-length 150
+tmux set -g status-style bg="#{@tmux-status-line_color_bg}"
+tmux set -g message-style "bg=#{@tmux-status-line_color_blue},fg=#{@tmux-status-line_color_fg}"
+tmux set -g message-command-style "fg=#{@tmux-status-line_color_white},bg=#{@tmux-status-line_color_black}"
 
-RESET="#[fg=${THEME[foreground]},bg=${THEME[background]},nobold,noitalics,nounderscore,nodim]"
-# Highlight colors
-tmux set -g mode-style "fg=${THEME[bgreen]},bg=${THEME[bblack]}"
+# Defaults
+# --------
+tmux_opt_setup "window_id_style" "hsquare"
+tmux_opt_setup "pane_id_style" "hsquare"
+tmux_opt_setup "zoom_id_style" "dsquare"
 
-tmux set -g message-style "bg=${THEME[blue]},fg=${THEME[background]}"
-tmux set -g message-command-style "fg=${THEME[white]},bg=${THEME[black]}"
+# Widget Calls
+# ------------
+git_status="#(${script_path}/git-status.sh #{pane_current_path})"
+wb_git_status="#(${script_path}/wb-git-status.sh #{pane_current_path})"
+window_number="#(${script_path}/custom-number.sh #{window_index} #{@tmux-status-line_window_id_style})"
+custom_pane="#(${script_path}/custom-number.sh #{pane_index} #{@tmux-status-line_pane_id_style})"
+zoom_number="#(${script_path}/custom-number.sh #{pane_index} #{@tmux-status-line_zoom_id_style})"
+date_and_time="#(${script_path}/datetime-widget.sh)"
+current_path="#(${script_path}/path-widget.sh #{pane_current_path})"
+netspeed="#(${script_path}/netspeed.sh)"
+hostname="#(${script_path}/hostname-widget.sh)"
+battery_status="#(${script_path}/battery-widget.sh)"
 
-tmux set -g pane-border-style "fg=${THEME[bblack]}"
-tmux set -g pane-active-border-style "fg=${THEME[blue]}"
-tmux set -g pane-border-status off
-
-tmux set -g status-style bg="${THEME[background]}"
-
-TMUX_VARS="$(tmux show -g)"
-
-default_window_id_style="digital"
-default_pane_id_style="hsquare"
-default_zoom_id_style="dsquare"
-
-default_terminal_icon=""
-default_active_terminal_icon=""
-
-window_id_style="$(echo "$TMUX_VARS" | grep '@tmux-status-line_window_id_style' | cut -d" " -f2)"
-pane_id_style="$(echo "$TMUX_VARS" | grep '@tmux-status-line_pane_id_style' | cut -d" " -f2)"
-zoom_id_style="$(echo "$TMUX_VARS" | grep '@tmux-status-line_zoom_id_style' | cut -d" " -f2)"
-terminal_icon="$(echo "$TMUX_VARS" | grep '@tmux-status-line_terminal_icon' | cut -d" " -f2)"
-active_terminal_icon="$(echo "$TMUX_VARS" | grep '@tmux-status-line_active_terminal_icon' | cut -d" " -f2)"
-window_tidy="$(echo "$TMUX_VARS" | grep '@tmux-status-line_window_tidy_icons' | cut -d" " -f2)"
-
-window_id_style="${window_id_style:-$default_window_id_style}"
-pane_id_style="${pane_id_style:-$default_pane_id_style}"
-zoom_id_style="${zoom_id_style:-$default_zoom_id_style}"
-terminal_icon="${terminal_icon:-$default_terminal_icon}"
-active_terminal_icon="${active_terminal_icon:-$default_active_terminal_icon}"
-window_space="${window_tidy:-0}"
-
-window_space=$([[ $window_tidy == "0" ]] && echo " " || echo "")
-
-netspeed="#($SCRIPTS_PATH/netspeed.sh)"
-cmus_status="#($SCRIPTS_PATH/music-tmux-statusbar.sh)"
-git_status="#($SCRIPTS_PATH/git-status.sh #{pane_current_path})"
-wb_git_status="#($SCRIPTS_PATH/wb-git-status.sh #{pane_current_path} &)"
-window_number="#($SCRIPTS_PATH/custom-number.sh #I $window_id_style)"
-custom_pane="#($SCRIPTS_PATH/custom-number.sh #P $pane_id_style)"
-zoom_number="#($SCRIPTS_PATH/custom-number.sh #P $zoom_id_style)"
-date_and_time="$($SCRIPTS_PATH/datetime-widget.sh)"
-current_path="#($SCRIPTS_PATH/path-widget.sh #{pane_current_path})"
-battery_status="#($SCRIPTS_PATH/battery-widget.sh)"
-hostname="#($SCRIPTS_PATH/hostname-widget.sh)"
-
-#+--- Bars LEFT ---+
-# Session name
-tmux set -g status-left "#[fg=${THEME[bblack]},bg=${THEME[blue]},bold] #{?client_prefix,󰠠 ,#[dim]󰤂 }#[bold,nodim]#S$hostname "
-
-#+--- Windows ---+
-# Focus
-tmux set -g window-status-current-format "$RESET#[fg=${THEME[green]},bg=${THEME[bblack]}] #{?#{==:#{pane_current_command},ssh},󰣀 ,$active_terminal_icon $window_space}#[fg=${THEME[foreground]},bold,nodim]$window_number#W#[nobold]#{?window_zoomed_flag, $zoom_number, $custom_pane}#{?window_last_flag, , }"
-# Unfocused
-tmux set -g window-status-format "$RESET#[fg=${THEME[foreground]}] #{?#{==:#{pane_current_command},ssh},󰣀 ,$terminal_icon $window_space}${RESET}$window_number#W#[nobold,dim]#{?window_zoomed_flag, $zoom_number, $custom_pane}#[fg=${THEME[yellow]}]#{?window_last_flag,󰁯  , }"
-
-#+--- Bars RIGHT ---+
-tmux set -g status-right "$battery_status$current_path$cmus_status$netspeed$git_status$wb_git_status$date_and_time"
+# Status Line
+# -----------
+# left status line
+tmux set -g status-left "#[fg=#{@tmux-status-line_color_fg},bg=#{@tmux-status-line_color_bg},reverse,bold] #{?client_prefix,${prefix_active} ,#[dim]${prefix_idle} }#[bold,nodim]#S${hostname} "
+# window focused
+tmux set -g window-status-current-format "#{@tmux-status-line_reset_style}#[fg=#{@tmux-status-line_color_fg},bg=#{@tmux-status-line_color_brightblue},reverse] #{?#{==:#{pane_current_command},ssh},${ssh_icon} ,${term_icon_active} }#[fg=#{@tmux-status-line_color_fg},bg=#{@tmux-status-line_color_bg},bold,nodim]${window_number}#W#[nobold]#{?window_zoomed_flag, ${zoom_number}, ${custom_pane}}#{?window_last_flag, , }"
+# window unfocused
+tmux set -g window-status-format "#{@tmux-status-line_reset_style}#[fg=#{@tmux-status-line_color_fg}] #{?#{==:#{pane_current_command},ssh},${ssh_icon} ,${term_icon} }#{@tmux-status-line_reset_style}${window_number}#W#[nobold,dim]#{?window_zoomed_flag, ${zoom_number}, ${custom_pane}}#[fg=#{@tmux-status-line_color_brightyellow}]#{?window_last_flag,${last_win_icon}  , }"
+# right status line
+tmux set -g status-right "${battery_status}${current_path}${netspeed}${git_status}${wb_git_status}${date_and_time}"
 tmux set -g window-status-separator ""
