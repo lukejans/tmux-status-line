@@ -54,9 +54,9 @@ tmux set -g message-command-style "fg=#{@tmux-status-line_color_white},bg=#{@tmu
 tmux_opt_setup "window_id_style" "none"
 tmux_opt_setup "pane_id_style" "hsquare"
 tmux_opt_setup "zoom_id_style" "dsquare"
-tmux_opt_setup "show_hostname" "0"
-tmux_opt_setup "show_git" "1"
-tmux_opt_setup "show_web_git" "1"
+tmux_opt_setup "show_hostname" 0
+tmux_opt_setup "show_git" 1
+tmux_opt_setup "show_web_git" 1
 
 # Widget Calls
 # ------------

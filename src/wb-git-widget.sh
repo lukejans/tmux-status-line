@@ -2,7 +2,7 @@
 
 show_widget=$(tmux show-option -gv @tmux-status-line_show_web_git)
 
-if [ "$show_widget" == "0" ]; then
+if [ "$show_widget" -eq 0 ]; then
     exit 0
 fi
 

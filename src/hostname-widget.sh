@@ -2,7 +2,7 @@
 
 show_widget=$(tmux show-option -gv @tmux-status-line_show_hostname)
 
-if [ "${show_widget}" -ne 1 ]; then
+if [ "${show_widget:-0}" -eq 0 ]; then
     exit 0
 fi
 
