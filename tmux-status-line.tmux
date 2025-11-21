@@ -3,10 +3,8 @@
 current_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 script_path="${current_dir}/src"
 
-option_prefix="@tmux-status-line_"
-
 tmux_opt_setup() {
-    local option_name="${option_prefix}${1}"
+    local option_name="@tmux-status-line_${1}"
     local option_default="${2}"
     tmux set-option -go "${option_name}" "${option_default}"
 }
@@ -53,9 +51,12 @@ tmux set -g message-command-style "fg=#{@tmux-status-line_color_white},bg=#{@tmu
 
 # Defaults
 # --------
-tmux_opt_setup "window_id_style" "hsquare"
+tmux_opt_setup "window_id_style" "none"
 tmux_opt_setup "pane_id_style" "hsquare"
 tmux_opt_setup "zoom_id_style" "dsquare"
+tmux_opt_setup "show_hostname" "0"
+tmux_opt_setup "show_git" "1"
+tmux_opt_setup "show_web_git" "1"
 
 # Widget Calls
 # ------------

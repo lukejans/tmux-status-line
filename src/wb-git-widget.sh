@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-show_widget=$(tmux show-option -gv @tmux-status-line_show_wbg)
+show_widget=$(tmux show-option -gv @tmux-status-line_show_web_git)
 
 if [ "$show_widget" == "0" ]; then
     exit 0
