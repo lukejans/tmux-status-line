@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
 show_widget=$(tmux show-option -gv @tmux-status-line_show_wbg)
-[ "$show_widget" == "0" ] && exit 0
+
+if [ "$show_widget" == "0" ]; then
+    exit 0
+fi
 
 current_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$current_dir/../lib/coreutils-compat.sh"

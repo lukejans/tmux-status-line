@@ -1,7 +1,8 @@
 #!/bin/sh
 
-show_hostname=$(tmux show-option -gv @tmux-status-line_show_hostname)
-if [ "${show_hostname}" -ne 1 ]; then
+show_widget=$(tmux show-option -gv @tmux-status-line_show_hostname)
+
+if [ "${show_widget}" -ne 1 ]; then
     exit 0
 fi
 

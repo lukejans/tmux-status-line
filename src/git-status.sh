@@ -3,11 +3,11 @@
 set -u
 
 git_repo="$1"
-git_show=$(tmux show -gv @tmux-status-line_show_git 2>/dev/null)
+show_widget=$(tmux show -gv @tmux-status-line_show_git 2>/dev/null)
 
 if ! cd "${git_repo}" 2>/dev/null \
     || [ ! -d .git ] \
-    || [ "${git_show:-0}" = "0" ]; then
+    || [ "${show_widget:-0}" = "0" ]; then
     exit 0
 fi
 
