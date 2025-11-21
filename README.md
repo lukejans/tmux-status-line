@@ -1,4 +1,4 @@
-# Tokyo Night Tmux
+# Tmux Status Line
 
 > forked from [janoamaral](https://github.com/janoamaral)/[tmux-status-line](https://github.com/janoamaral/tmux-status-line)
 
@@ -43,9 +43,9 @@ set -g @plugin "janoamaral/tmux-status-line"
 
 - `hide`: hide number
 - `none`: no style, default font
-- `fsquare`: filled square (󰎡...󰎼) _(requires nerdfont)_
-- `hsquare`: hollow square (󰎣...󰎾) _(requires nerdfont)_
-- `dsquare`: hollow double square (󰎡...󰎼) _(requires nerdfont)_
+- `fsquare`: filled square _(requires nerdfont)_
+- `hsquare`: hollow square _(requires nerdfont)_
+- `dsquare`: hollow double square _(requires nerdfont)_
 
 ## Highlights
 
