@@ -4,8 +4,8 @@
 
 ## Requirements
 
-> ![IMPORTANT]
-> I'm doing a full rewrite of this project to fix a few performance concerns and make the script a regular `sh` script so that it can run with fewer dependencies. It will strive to use tools specified by the POSIX standard so there will be no need to install gnu coreutils in the future.
+> [!NOTE]
+> I'm doing a full rewrite of this project to fix a few performance concerns and make the script a regular `sh` script so that it can run with fewer dependencies. It will strive to use tools specified by the POSIX standard so there will be no need to install gnu coreutils in the future. EXPECT THE CONFIG OPTIONS TO CHANGE.
 
 This theme has the following hard requirements:
 
