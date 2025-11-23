@@ -6,7 +6,7 @@ git_repo="$1"
 show_widget=$(tmux show -gv @tmux-status-line_show_git 2>/dev/null)
 
 if ! cd "${git_repo}" 2>/dev/null \
-    || [ ! -d .git ] \
+    || ! git rev-parse --is-inside-work-tree >/dev/null 2>&1 \
     || [ "${show_widget:-0}" -eq 0 ]; then
     exit 0
 fi
