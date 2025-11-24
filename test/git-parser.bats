@@ -23,7 +23,7 @@ setup() {
     run awk -f "$PARSER_DIR/git-status.awk" "$FIXTURES/detached.txt"
 
     assert_success
-    assert_output "a24d5a1684 0 0 0 0 0 0"
+    assert_output "HEAD(a24d5a1) 0 0 0 0 0 0"
 }
 
 @test "parses repository ahead of remote" {

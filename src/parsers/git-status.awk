@@ -36,7 +36,7 @@ BEGIN {
 
 END {
     if (head == "(detached)") {
-        branch = substr(o_id, 1, 10)
+        branch = "HEAD(" substr(o_id, 1, 7) ")"
     } else {
         branch = head
     }
