@@ -2,6 +2,7 @@
 
 set -u
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 git_repo="$1"
 show_widget=$(tmux show -gv @tmux-status-line_show_git 2>/dev/null)
 
@@ -26,29 +27,10 @@ icon_diverged=" " #  󰘭 󰘬 
 
 # Git Data
 # --------
-IFS=' ' read -r branch ahead behind changes moved untracked <<EOF
-$(git status --porcelain=v2 --branch 2>/dev/null | awk '
-    /^# branch.oid/ { o_id = $3 }
-    /^# branch.head/ { head = $3 }
-    /^# branch.ab/ {
-        ahead = substr($3, 2)
-        behind = substr($4, 2)
-    }
-    /^[12] / {
-        status = $2
-        if (status ~ /M/ || status ~ /D/) changes++
-        if (status ~ /R/) moved++
-    }
-    /^\?/ { untracked++ }
-    END {
-        if (head == "(detached)") {
-            branch = substr(o_id, 1, 10)
-        } else {
-            branch = head
-        }
-        print branch ahead behind changes moved untracked
-    }
-')
+git_data=$(git status --porcelain=v2 --branch --show-stash 2>/dev/null)
+
+IFS=' ' read -r branch ahead behind changes moved untracked stash <<EOF
+$(printf "%s\n" "$git_data" | awk -f "$SCRIPT_DIR/parsers/git-status.awk")
 EOF
 
 if [ "$changes" -ne 0 ]; then
