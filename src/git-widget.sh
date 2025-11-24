@@ -19,6 +19,7 @@ icon_insert=" "
 icon_delete=" "
 icon_untracked=" "
 icon_moved=" "
+icon_stash=" "    # 
 icon_clean="󰜝 "    # 󰘬 󱓏 
 icon_dirty="󰜞 "    # 󱓎 󰜜 󰜛 󰜘
 icon_push=" "     # 󱓊 󰜞
@@ -65,21 +66,25 @@ fi
 
 # Update Status Line
 # ------------------
-remote_status="#{@tmux-status-line_reset_style}"
+branch_status="#{@tmux-status-line_reset_style}"
 
 if [ "$sync_mode" = 'dirty' ]; then
-    remote_status="$remote_status#[bg=#{@tmux-status-line_color_bg},fg=#{@tmux-status-line_color_magenta},bold]${icon_dirty}"
+    branch_status="$branch_status#[bg=#{@tmux-status-line_color_bg},fg=#{@tmux-status-line_color_magenta},bold]${icon_dirty}"
 elif [ "$sync_mode" = 'ahead' ]; then
-    remote_status="$remote_status#[bg=#{@tmux-status-line_color_bg},fg=#{@tmux-status-line_color_red},bold]${icon_push}"
+    branch_status="$branch_status#[bg=#{@tmux-status-line_color_bg},fg=#{@tmux-status-line_color_red},bold]${icon_push}"
 elif [ "$sync_mode" = 'behind' ]; then
-    remote_status="$remote_status#[bg=#{@tmux-status-line_color_bg},fg=#{@tmux-status-line_color_red},bold]${icon_pull}"
+    branch_status="$branch_status#[bg=#{@tmux-status-line_color_bg},fg=#{@tmux-status-line_color_red},bold]${icon_pull}"
 elif [ "$sync_mode" = 'diverged' ]; then
-    remote_status="$remote_status#[bg=#{@tmux-status-line_color_bg},fg=#{@tmux-status-line_color_red},bold]${icon_diverged}"
+    branch_status="$branch_status#[bg=#{@tmux-status-line_color_bg},fg=#{@tmux-status-line_color_red},bold]${icon_diverged}"
 else
-    remote_status="$remote_status#[bg=#{@tmux-status-line_color_bg},fg=#{@tmux-status-line_color_green},bold]${icon_clean}"
+    branch_status="$branch_status#[bg=#{@tmux-status-line_color_bg},fg=#{@tmux-status-line_color_green},bold]${icon_clean}"
 fi
 
-output="$remote_status#{@tmux-status-line_reset_style}${branch:-} "
+if [ "$stash" -gt 0 ]; then
+    stash_status="$icon_stash$stash"
+fi
+
+output="${stash_status:-} $branch_status#{@tmux-status-line_reset_style}${branch:-} "
 
 if [ "$changes" -gt 0 ]; then
     output="$output#{@tmux-status-line_reset_style}#[fg=#{@tmux-status-line_color_yellow},bg=#{@tmux-status-line_color_bg},bold]${icon_change}${changes} "
