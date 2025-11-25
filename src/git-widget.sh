@@ -19,18 +19,19 @@ icon_insert=" "
 icon_delete=" "
 icon_untracked=" "
 icon_moved=" "
-icon_stash=" "    # 
-icon_clean="󰜝 "    # 󰘬 󱓏 
-icon_dirty="󰜞 "    # 󱓎 󰜜 󰜛 󰜘
-icon_push=" "     # 󱓊 󰜞
-icon_pull=" "     # 󰓂  󰜚
-icon_diverged=" " #  󰘭 󰘬 
+icon_unmerged=" "
+icon_stash=" "
+icon_clean="󰜝 "
+icon_dirty="󰜞 "
+icon_push=" "
+icon_pull=" "
+icon_diverged=" "
 
 # Git Data
 # --------
 git_data=$(git status --porcelain=v2 --branch --show-stash 2>/dev/null)
 
-IFS=' ' read -r branch ahead behind changes moved untracked stash <<EOF
+IFS=' ' read -r branch ahead behind changes moved untracked stash unmerged <<EOF
 $(printf "%s\n" "$git_data" | awk -f "$SCRIPT_DIR/parsers/git-status.awk")
 EOF
 
@@ -80,13 +81,13 @@ else
     branch_status="$branch_status#[bg=#{@tmux-status-line_color_bg},fg=#{@tmux-status-line_color_green},bold]${icon_clean}"
 fi
 
-if [ "$stash" -gt 0 ]; then
+if [ "${stash:-0}" -gt 0 ]; then
     stash_status="$icon_stash$stash"
 fi
 
 output="${stash_status:-} $branch_status#{@tmux-status-line_reset_style}${branch:-} "
 
-if [ "$changes" -gt 0 ]; then
+if [ "${changes:-0}" -gt 0 ]; then
     output="$output#{@tmux-status-line_reset_style}#[fg=#{@tmux-status-line_color_yellow},bg=#{@tmux-status-line_color_bg},bold]${icon_change}${changes} "
 fi
 
@@ -98,12 +99,16 @@ if [ "${deletions:-0}" -gt 0 ]; then
     output="$output#{@tmux-status-line_reset_style}#[fg=#{@tmux-status-line_color_red},bg=#{@tmux-status-line_color_bg},bold]${icon_delete}${deletions} "
 fi
 
-if [ "$untracked" -gt 0 ]; then
+if [ "${untracked:-0}" -gt 0 ]; then
     output="$output#{@tmux-status-line_reset_style}#[fg=#{@tmux-status-line_color_brightblack},bg=#{@tmux-status-line_color_bg},bold]${icon_untracked}${untracked} "
 fi
 
-if [ "$moved" -gt 0 ]; then
+if [ "${moved:-0}" -gt 0 ]; then
     output="$output#{@tmux-status-line_reset_style}#[fg=#{@tmux-status-line_color_white},bg=#{@tmux-status-line_color_bg},bold]${icon_moved}${moved} "
+fi
+
+if [ "${unmerged:-0}" -gt 0 ]; then
+    output="$output#{@tmux-status-line_reset_style}#[fg=#{@tmux-status-line_color_white},bg=#{@tmux-status-line_color_bg},bold]${icon_unmerged}${unmerged} "
 fi
 
 echo "$output"

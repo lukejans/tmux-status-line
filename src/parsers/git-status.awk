@@ -2,6 +2,7 @@ BEGIN {
     changed = 0
     moved = 0
     untracked = 0
+    unmerged = 0
     ahead = 0
     behind = 0
     stash = 0
@@ -30,6 +31,10 @@ BEGIN {
     if (status ~ /R/) moved++
 }
 
+/^u / {
+    unmerged++
+}
+
 /^\?/ {
     untracked++
 }
@@ -41,5 +46,5 @@ END {
         branch = head
     }
 
-    print branch, ahead, behind, changed, moved, untracked, stash
+    print branch, ahead, behind, changed, moved, untracked, stash, unmerged
 }
