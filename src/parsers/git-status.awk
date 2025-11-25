@@ -1,4 +1,5 @@
 BEGIN {
+    branch = "<unknown>"
     changed = 0
     moved = 0
     untracked = 0
