@@ -1,0 +1,7 @@
+Showing 3 open issues in lukejans-group/lukejans-project that match your search. (Page 1)
+
+ID	Title	Labels	Created at
+#3	gitlab issue test with multiple labels	(another_label, bug, help wanted)	about 1 hour ago
+#2	gitlab issue test with a bug label	(bug)	about 1 hour ago
+#1	gitlab issue test with no labels		about 22 hours ago
+

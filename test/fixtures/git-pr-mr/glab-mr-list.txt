@@ -1,0 +1,5 @@
+Showing 2 open merge requests on lukejans-group/lukejans-project. (Page 1)
+
+!2	lukejans-group/lukejans-project!2	gitlab merge request test no assignee	(main) ← (dev)
+!1	lukejans-group/lukejans-project!1	gitlab merge request test assigned to user	(main) ← (testing)
+
