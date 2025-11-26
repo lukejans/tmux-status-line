@@ -8,7 +8,7 @@ setup() {
     load 'test_helper/common-setup'
     _common_setup
 
-    FIXTURES="$PROJECT_ROOT/test/fixtures/git"
+    FIXTURES="$PROJECT_ROOT/test/fixtures/git-status"
     PARSER="$PROJECT_ROOT/src/parsers/git-status.awk"
 }
 
